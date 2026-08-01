@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
-  "trailingSlash": false,
+  "trailingSlash": true,
   "headers": [
     {
       "source": "/downloads/(.*)",
@@ -45,27 +45,37 @@
   "redirects": [
     {
       "source": "/chapter/04",
-      "destination": "/#downloads",
+      "destination": "/4/",
       "permanent": false
     },
     {
       "source": "/chapter/05",
-      "destination": "/#downloads",
+      "destination": "/",
       "permanent": false
     },
     {
       "source": "/chapter/06",
-      "destination": "/#chapter-07",
+      "destination": "/7/",
       "permanent": false
     },
     {
       "source": "/chapter/07",
-      "destination": "/#downloads",
+      "destination": "/7/",
       "permanent": false
     },
     {
       "source": "/chapter/08",
-      "destination": "/#chapter-09",
+      "destination": "/9/",
+      "permanent": false
+    },
+    {
+      "source": "/chapter/09",
+      "destination": "/9/",
+      "permanent": false
+    },
+    {
+      "source": "/chapter/11",
+      "destination": "/11/",
       "permanent": false
     }
   ]

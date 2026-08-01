@@ -1,7 +1,9 @@
 const status = document.querySelector(".download-status");
 const downloadLinks = document.querySelectorAll("[data-download]");
+const copyButton = document.querySelector("[data-copy-url]");
 
 let statusTimer;
+let copyTimer;
 
 downloadLinks.forEach((link) => {
   const label = link.querySelector("[data-button-label]");
@@ -18,7 +20,7 @@ downloadLinks.forEach((link) => {
     }
 
     if (status && fileName) {
-      status.textContent = `${fileName} 다운로드를 시작했습니다. 파일은 다운로드 폴더에 그대로 두세요.`;
+      status.textContent = "다운로드가 시작됐습니다. 파일은 다운로드 폴더에 저장됩니다.";
       status.classList.add("is-visible");
     }
 
@@ -32,4 +34,31 @@ downloadLinks.forEach((link) => {
       status?.classList.remove("is-visible");
     }, 4200);
   });
+});
+
+copyButton?.addEventListener("click", async () => {
+  const label = copyButton.querySelector("[data-copy-label]");
+  const pageUrl = `${window.location.origin}/`;
+
+  window.clearTimeout(copyTimer);
+
+  try {
+    await navigator.clipboard.writeText(pageUrl);
+
+    if (label) {
+      label.textContent = "주소를 복사했습니다";
+    }
+  } catch (error) {
+    console.warn("주소를 복사하지 못했습니다.", error);
+
+    if (label) {
+      label.textContent = "주소 표시줄에서 복사할 수 있습니다";
+    }
+  }
+
+  copyTimer = window.setTimeout(() => {
+    if (label) {
+      label.textContent = "주소 복사";
+    }
+  }, 3200);
 });
