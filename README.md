@@ -43,4 +43,6 @@ node scripts/verify-site.mjs
 
 ## 배포 상태
 
-이 저장소는 로컬 검수와 GitHub 보관까지만 진행한 상태입니다. Vercel 운영 배포에는 아직 반영하지 않았습니다.
+Vercel 운영 주소는 <https://life-auto.vercel.app>입니다. 배포 전에
+`node scripts/verify-site.mjs`로 페이지·자료 해시·redirect·배포 제외
+계약을 모두 확인합니다.

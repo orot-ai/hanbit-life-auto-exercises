@@ -44,42 +44,42 @@
   ],
   "redirects": [
     {
-      "source": "/chapter/04",
+      "source": "/chapter/04/",
       "destination": "/",
       "permanent": false
     },
     {
-      "source": "/4",
+      "source": "/4/",
       "destination": "/",
       "permanent": false
     },
     {
-      "source": "/chapter/05",
+      "source": "/chapter/05/",
       "destination": "/",
       "permanent": false
     },
     {
-      "source": "/chapter/06",
+      "source": "/chapter/06/",
       "destination": "/7/",
       "permanent": false
     },
     {
-      "source": "/chapter/07",
+      "source": "/chapter/07/",
       "destination": "/7/",
       "permanent": false
     },
     {
-      "source": "/chapter/08",
+      "source": "/chapter/08/",
       "destination": "/9/",
       "permanent": false
     },
     {
-      "source": "/chapter/09",
+      "source": "/chapter/09/",
       "destination": "/9/",
       "permanent": false
     },
     {
-      "source": "/chapter/11",
+      "source": "/chapter/11/",
       "destination": "/11/",
       "permanent": false
     }

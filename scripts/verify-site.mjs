@@ -13,6 +13,15 @@ const pagePaths = [
 const pages = new Map(
   pagePaths.map((path) => [path, readFileSync(resolve(root, path), "utf8")]),
 );
+const vercelConfig = JSON.parse(
+  readFileSync(resolve(root, "vercel.json"), "utf8"),
+);
+const vercelIgnore = new Set(
+  readFileSync(resolve(root, ".vercelignore"), "utf8")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean),
+);
 
 const files = new Map([
   [
@@ -49,6 +58,46 @@ const sha256 = (path) =>
   createHash("sha256").update(readFileSync(path)).digest("hex");
 
 const errors = [];
+
+if (vercelConfig.cleanUrls !== true || vercelConfig.trailingSlash !== true) {
+  errors.push("Vercel cleanUrls/trailingSlash 계약이 true가 아님");
+}
+
+const expectedRedirects = new Map([
+  ["/chapter/04/", "/"],
+  ["/4/", "/"],
+  ["/chapter/05/", "/"],
+  ["/chapter/06/", "/7/"],
+  ["/chapter/07/", "/7/"],
+  ["/chapter/08/", "/9/"],
+  ["/chapter/09/", "/9/"],
+  ["/chapter/11/", "/11/"],
+]);
+const actualRedirects = new Map(
+  (vercelConfig.redirects ?? []).map((redirect) => [
+    redirect.source,
+    redirect.destination,
+  ]),
+);
+
+for (const [source, destination] of expectedRedirects) {
+  if (actualRedirects.get(source) !== destination) {
+    errors.push(`Vercel redirect 계약 불일치: ${source} → ${destination}`);
+  }
+}
+
+for (const deploymentOnlyPath of [
+  ".git",
+  ".github",
+  ".vercel",
+  ".gitattributes",
+  "scripts",
+  "*.md",
+]) {
+  if (!vercelIgnore.has(deploymentOnlyPath)) {
+    errors.push(`Vercel 배포 제외 누락: ${deploymentOnlyPath}`);
+  }
+}
 
 for (const [path, html] of pages) {
   if (!html.includes('lang="ko"')) {
@@ -106,4 +155,7 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`✓ 장별 페이지 ${pages.size}개와 실습자료 ${files.size}종 검증 통과`);
+console.log(
+  `✓ 장별 페이지 ${pages.size}개, 실습자료 ${files.size}종, ` +
+    `배포 redirect ${expectedRedirects.size}개 검증 통과`,
+);
