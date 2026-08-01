@@ -1,0 +1,6 @@
+.git
+.github
+.vercel
+output
+scripts
+*.md
