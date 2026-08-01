@@ -40,36 +40,31 @@
     </header>
 
     <main id="main">
+      <aside class="computer-note shell">
+        실습은 컴퓨터에서 진행합니다.
+        <button
+          class="copy-button"
+          type="button"
+          data-copy-url
+          data-action="clipboard.copy-site-url"
+        >
+          <span data-copy-label>주소 복사</span>
+        </button>
+      </aside>
+
       <section class="home-hero" aria-labelledby="hero-title">
         <div class="shell home-hero-inner">
           <p class="eyebrow">코딩 몰라도 인생자동화 됩니다</p>
-          <h1 id="hero-title">읽고 있는 장의<br>실습자료</h1>
-          <p class="home-description">
-            장마다 쓰는 파일이 다릅니다.
-            책에 다운로드 안내가 나왔을 때 같은 장을 열면 됩니다.
-          </p>
+          <h1 id="hero-title">실습자료</h1>
         </div>
       </section>
 
       <section class="chapter-picker shell" aria-labelledby="picker-title">
         <header class="picker-heading">
-          <h2 id="picker-title">지금 몇 장을 읽고 있나요?</h2>
+          <h2 id="picker-title">장 선택</h2>
         </header>
 
         <div class="chapter-grid">
-          <a class="chapter-card" href="/4/" data-action="navigation.chapter04">
-            <span class="chapter-card-number" aria-hidden="true">04</span>
-            <div class="chapter-card-copy">
-              <span class="chapter-card-status is-empty">자료 없음</span>
-              <h3>시작 준비</h3>
-            </div>
-            <span class="chapter-card-arrow" aria-hidden="true">
-              <svg viewBox="0 0 20 20">
-                <path d="M4 10h12m-5-5 5 5-5 5"/>
-              </svg>
-            </span>
-          </a>
-
           <a class="chapter-card" href="/7/" data-action="navigation.chapter07">
             <span class="chapter-card-number" aria-hidden="true">07</span>
             <div class="chapter-card-copy">
@@ -87,7 +82,7 @@
             <span class="chapter-card-number" aria-hidden="true">09</span>
             <div class="chapter-card-copy">
               <span class="chapter-card-status">파일 1개</span>
-              <h3>녹음 한 건 처리</h3>
+              <h3>예제 녹음</h3>
             </div>
             <span class="chapter-card-arrow" aria-hidden="true">
               <svg viewBox="0 0 20 20">
@@ -99,8 +94,8 @@
           <a class="chapter-card" href="/11/" data-action="navigation.chapter11">
             <span class="chapter-card-number" aria-hidden="true">11</span>
             <div class="chapter-card-copy">
-              <span class="chapter-card-status">10장 뒤</span>
-              <h3>녹음 여러 건 처리</h3>
+              <span class="chapter-card-status">10장 실습 후</span>
+              <h3>예제 녹음 모음</h3>
             </div>
             <span class="chapter-card-arrow" aria-hidden="true">
               <svg viewBox="0 0 20 20">
@@ -110,19 +105,6 @@
           </a>
         </div>
 
-        <aside class="computer-note">
-          휴대폰에서는 파일을 받지 않아도 괜찮습니다.
-          실습할 컴퓨터에서 이 주소를 열면 됩니다.
-          <br>
-          <button
-            class="copy-button"
-            type="button"
-            data-copy-url
-            data-action="clipboard.copy-site-url"
-          >
-            <span data-copy-label>주소 복사</span>
-          </button>
-        </aside>
       </section>
     </main>
 

@@ -180,15 +180,6 @@ button {
   letter-spacing: -0.06em;
 }
 
-.home-description {
-  max-width: 650px;
-  margin: 19px 0 0;
-  color: #4d5a53;
-  font-size: clamp(17px, 2vw, 20px);
-  line-height: 1.75;
-  letter-spacing: -0.025em;
-}
-
 .chapter-picker {
   padding-block: clamp(44px, 5vw, 58px) clamp(72px, 8vw, 96px);
 }
@@ -204,15 +195,9 @@ button {
   letter-spacing: -0.045em;
 }
 
-.picker-heading p {
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-size: 16px;
-}
-
 .chapter-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -272,12 +257,6 @@ button {
   font-size: 22px;
   line-height: 1.28;
   letter-spacing: -0.04em;
-}
-
-.chapter-card p {
-  margin: 7px 0 0;
-  color: var(--muted);
-  font-size: 14px;
 }
 
 .chapter-card-arrow {
@@ -365,14 +344,6 @@ button {
   font-size: clamp(38px, 6vw, 58px);
   line-height: 1.1;
   letter-spacing: -0.055em;
-}
-
-.chapter-lead {
-  max-width: 650px;
-  margin: 20px 0 0;
-  color: #4d5a53;
-  font-size: clamp(17px, 2vw, 19px);
-  line-height: 1.75;
 }
 
 .prerequisite {
@@ -570,16 +541,6 @@ button {
   stroke-linejoin: round;
 }
 
-.after-note {
-  margin: 15px 0 0;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.after-note strong {
-  color: var(--ink);
-}
-
 .answer-warning {
   margin-bottom: 18px;
   display: grid;
@@ -760,7 +721,15 @@ button {
   }
 
   .computer-note {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .copy-button {
+    flex: none;
+    margin-top: 0;
   }
 
   .chapter-main {
@@ -785,10 +754,6 @@ button {
 
   .home-hero h1 {
     font-size: clamp(40px, 12vw, 52px);
-  }
-
-  .home-description {
-    font-size: 16px;
   }
 
   .chapter-picker {

@@ -45,7 +45,12 @@
   "redirects": [
     {
       "source": "/chapter/04",
-      "destination": "/4/",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/4",
+      "destination": "/",
       "permanent": false
     },
     {

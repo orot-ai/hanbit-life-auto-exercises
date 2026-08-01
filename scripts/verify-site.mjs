@@ -6,7 +6,6 @@ const root = resolve(import.meta.dirname, "..");
 const canonicalRoot = resolve(root, "..", "output", "실습자료");
 const pagePaths = [
   "index.html",
-  "4/index.html",
   "7/index.html",
   "9/index.html",
   "11/index.html",
@@ -63,7 +62,7 @@ for (const [path, html] of pages) {
 
 const homeHtml = pages.get("index.html") ?? "";
 
-for (const chapter of ["4", "7", "9", "11"]) {
+for (const chapter of ["7", "9", "11"]) {
   if (!homeHtml.includes(`href="/${chapter}/"`)) {
     errors.push(`홈의 장 선택 링크 없음: ${chapter}장`);
   }
@@ -71,6 +70,10 @@ for (const chapter of ["4", "7", "9", "11"]) {
 
 if (homeHtml.includes("/downloads/")) {
   errors.push("홈에 다운로드 링크가 노출됨");
+}
+
+if (homeHtml.includes('href="/4/"') || existsSync(resolve(root, "4", "index.html"))) {
+  errors.push("자료가 없는 4장 페이지가 노출됨");
 }
 
 for (const [file, expected] of files) {
