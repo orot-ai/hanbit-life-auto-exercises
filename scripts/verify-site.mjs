@@ -98,9 +98,10 @@ if (vercelConfig.cleanUrls !== true || vercelConfig.trailingSlash !== true) erro
 const redirects = new Map((vercelConfig.redirects ?? []).map((item) => [item.source, item.destination]));
 if (redirects.size !== 2 || redirects.get("/chapter/05/") !== "/5/" || redirects.get("/chapter/06/") !== "/6/") errors.push("Vercel redirect는 5장과 6장만 허용됨");
 
-for (const deploymentOnlyPath of [".git", ".github", ".vercel", ".gitattributes", "scripts", "*.md"]) {
+for (const deploymentOnlyPath of [".git", ".github", ".vercel", ".gitattributes", "scripts", "README.md", "ASSET_PROVENANCE.md"]) {
   if (!vercelIgnore.has(deploymentOnlyPath)) errors.push(`Vercel 배포 제외 누락: ${deploymentOnlyPath}`);
 }
+if (vercelIgnore.has("*.md") || vercelIgnore.has("downloads/*.md")) errors.push("다운로드용 Markdown 파일까지 Vercel 배포에서 제외됨");
 
 const publicHtml = [...pages.values()].join("\n");
 for (const forbidden of ["예제_녹음.m4a", "예제_녹음_모음.zip"]) {

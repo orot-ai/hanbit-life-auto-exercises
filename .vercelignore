@@ -4,4 +4,5 @@
 .gitattributes
 output
 scripts
-*.md
+README.md
+ASSET_PROVENANCE.md
