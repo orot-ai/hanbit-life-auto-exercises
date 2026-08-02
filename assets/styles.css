@@ -52,6 +52,95 @@ body.home-page {
   color: #f6f2e8;
 }
 
+body.chapter-page {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    #17221c;
+  background-size: 32px 32px;
+  color: #f6f2e8;
+}
+
+.chapter-page .site-header {
+  border-color: rgba(246, 242, 232, 0.16);
+  background: rgba(23, 34, 28, 0.92);
+}
+
+.chapter-page .brand-mark {
+  background: #f6f2e8;
+  color: #17221c;
+}
+
+.chapter-page .brand-copy strong {
+  color: #f6f2e8;
+}
+
+.chapter-page .brand-copy span,
+.chapter-page .header-state,
+.chapter-page .back-link,
+.chapter-page .chapter-intro,
+.chapter-page .step-heading > p {
+  color: rgba(246, 242, 232, 0.62);
+}
+
+.chapter-page .back-link:hover {
+  color: #f6f2e8;
+}
+
+.chapter-page .chapter-hero h1,
+.chapter-page .step-heading h2 {
+  color: #f6f2e8;
+}
+
+.chapter-page .step-block {
+  border-color: rgba(246, 242, 232, 0.2);
+}
+
+.chapter-page .practice-flow li {
+  border-color: rgba(246, 242, 232, 0.18);
+  background: rgba(246, 242, 232, 0.06);
+}
+
+.chapter-page .practice-flow strong {
+  color: #f6f2e8;
+}
+
+.chapter-page .practice-flow span {
+  color: rgba(246, 242, 232, 0.6);
+}
+
+.chapter-page .file-card,
+.chapter-page .example-link {
+  border-color: rgba(23, 34, 28, 0.16);
+  background: #f4f1e9;
+  color: #17211c;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+}
+
+.chapter-page .file-card.is-later {
+  border-color: #d9b85e;
+}
+
+.chapter-page .download-button {
+  border-color: #17221c;
+  background: #17221c;
+}
+
+.chapter-page .download-button:hover {
+  border-color: #30463a;
+  background: #30463a;
+}
+
+.chapter-page .site-footer {
+  border-color: rgba(246, 242, 232, 0.16);
+  background: rgba(12, 20, 15, 0.38);
+}
+
+.chapter-page .footer-inner,
+.chapter-page .footer-inner p:first-child {
+  color: rgba(246, 242, 232, 0.62);
+}
+
 main {
   flex: 1;
 }
