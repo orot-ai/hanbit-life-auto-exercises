@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 const root = resolve(import.meta.dirname, "..");
 const exerciseRoot = resolve(root, "..", "output", "실습자료");
 const canonicalRoot = resolve(exerciseRoot, "제작원본");
-const pagePaths = ["index.html", "5/index.html", "6/index.html"];
+const pagePaths = ["index.html", "5/index.html", "6/index.html", "8/index.html"];
 const pages = new Map(pagePaths.map((path) => [path, readFileSync(resolve(root, path), "utf8")]));
 const vercelConfig = JSON.parse(readFileSync(resolve(root, "vercel.json"), "utf8"));
 const vercelIgnore = new Set(readFileSync(resolve(root, ".vercelignore"), "utf8").split("\n").map((line) => line.trim()).filter(Boolean));
@@ -25,10 +25,13 @@ for (const [path, html] of pages) {
 const home = pages.get("index.html") ?? "";
 const chapter = pages.get("5/index.html") ?? "";
 const chapter6 = pages.get("6/index.html") ?? "";
+const chapter8 = pages.get("8/index.html") ?? "";
 requireText(home, 'href="/5/"', "홈의 5장 링크 없음");
 requireText(home, 'href="/6/"', "홈의 6장 링크 없음");
+requireText(home, 'href="/8/"', "홈의 8장 링크 없음");
 requireText(home, "문서 하나로 첫 대시보드를 만듭니다", "홈의 5장 제목 불일치");
 requireText(home, "다운로드 폴더는 왜 항상 엉망이 될까?", "홈의 6장 제목 불일치");
+requireText(home, "녹음은 쌓이는데, 할 일은 어디로 갔을까?", "홈의 8장 제목 불일치");
 if (home.includes("/downloads/")) errors.push("홈에 다운로드 링크가 노출됨");
 
 for (const phrase of ["PRD 내려받기", "코덱스에 건네기", "HTML 목업 만들기", "브라우저에서 확인하기"]) {
@@ -45,6 +48,12 @@ requireText(chapter6, 'href="/downloads/결과확인표.pdf"', "6장 결과확�
 requireText(chapter6, "결과확인표 내려받기", "6장 결과확인표 버튼 문구 불일치");
 requireText(chapter6, "실습 중에는 ZIP 파일을 그대로 보존합니다", "6장 ZIP 보존 안내 없음");
 requireText(chapter6, "정답지가 아니라", "6장 결과확인표 역할 안내 없음");
+
+requireText(chapter8, 'href="/downloads/예제_녹음.m4a"', "8장 예제 녹음 링크 없음");
+requireText(chapter8, "예제 녹음 내려받기", "8장 예제 녹음 버튼 문구 불일치");
+requireText(chapter8, "M4A는 휴대폰과 컴퓨터에서 재생할 수 있는 음원 파일", "8장 M4A 설명 없음");
+requireText(chapter8, "일정과 자료 전달", "8장 녹음 내용 안내 없음");
+requireText(chapter8, "약 92초", "8장 녹음 길이 안내 없음");
 
 const assets = [
   {
@@ -71,6 +80,12 @@ const assets = [
     expectedHash: "f0cdb10419e4686f089d2201fe8a1a05b54d7841dca924074bc9d686bf6fad98",
     label: "6장 결과확인표",
   },
+  {
+    deployed: resolve(root, "downloads", "예제_녹음.m4a"),
+    canonical: resolve(exerciseRoot, "예제_녹음.m4a"),
+    expectedHash: "75c3ffa6d9ac2fd994bb20e191f1c693242f707a10beb99b8e80ee71de7a2bbb",
+    label: "8장 예제 녹음",
+  },
 ];
 
 for (const asset of assets) {
@@ -84,7 +99,7 @@ for (const asset of assets) {
 }
 
 const downloadNames = readdirSync(resolve(root, "downloads")).filter((name) => statSync(resolve(root, "downloads", name)).isFile()).sort();
-const expectedDownloads = ["결과확인표.pdf", "예제_다운로드_폴더.zip", "인생자동화대시보드_PRD.md"].sort();
+const expectedDownloads = ["결과확인표.pdf", "예제_녹음.m4a", "예제_다운로드_폴더.zip", "인생자동화대시보드_PRD.md"].sort();
 if (downloadNames.join("\n") !== expectedDownloads.join("\n")) errors.push(`공개 다운로드 범위 불일치: ${downloadNames.join(", ")}`);
 
 for (const removedChapter of ["7", "9", "11"]) {
@@ -96,7 +111,12 @@ if (existsSync(resolve(root, "downloads", requestPromptName)) || chapter.include
 
 if (vercelConfig.cleanUrls !== true || vercelConfig.trailingSlash !== true) errors.push("Vercel cleanUrls/trailingSlash 계약이 true가 아님");
 const redirects = new Map((vercelConfig.redirects ?? []).map((item) => [item.source, item.destination]));
-if (redirects.size !== 2 || redirects.get("/chapter/05/") !== "/5/" || redirects.get("/chapter/06/") !== "/6/") errors.push("Vercel redirect는 5장과 6장만 허용됨");
+if (
+  redirects.size !== 3 ||
+  redirects.get("/chapter/05/") !== "/5/" ||
+  redirects.get("/chapter/06/") !== "/6/" ||
+  redirects.get("/chapter/08/") !== "/8/"
+) errors.push("Vercel redirect는 5장, 6장, 8장만 허용됨");
 
 for (const deploymentOnlyPath of [".git", ".github", ".vercel", ".gitattributes", "scripts", "README.md", "ASSET_PROVENANCE.md"]) {
   if (!vercelIgnore.has(deploymentOnlyPath)) errors.push(`Vercel 배포 제외 누락: ${deploymentOnlyPath}`);
@@ -104,7 +124,7 @@ for (const deploymentOnlyPath of [".git", ".github", ".vercel", ".gitattributes"
 if (vercelIgnore.has("*.md") || vercelIgnore.has("downloads/*.md")) errors.push("다운로드용 Markdown 파일까지 Vercel 배포에서 제외됨");
 
 const publicHtml = [...pages.values()].join("\n");
-for (const forbidden of ["예제_녹음.m4a", "예제_녹음_모음.zip"]) {
+for (const forbidden of ["예제_녹음_모음.zip"]) {
   if (publicHtml.includes(forbidden)) errors.push(`제거 대상 다운로드 링크가 남음: ${forbidden}`);
 }
 
@@ -113,4 +133,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`✓ 실습자료 페이지 ${pages.size}개와 완성 목업, 다운로드 3종, 제작 정본 4종, redirect 2개 검증 통과`);
+console.log(`✓ 실습자료 페이지 ${pages.size}개와 완성 목업, 다운로드 4종, 제작 정본 5종, redirect 3개 검증 통과`);

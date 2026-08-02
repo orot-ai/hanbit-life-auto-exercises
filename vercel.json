@@ -23,6 +23,7 @@
   ],
   "redirects": [
     { "source": "/chapter/05/", "destination": "/5/", "permanent": false },
-    { "source": "/chapter/06/", "destination": "/6/", "permanent": false }
+    { "source": "/chapter/06/", "destination": "/6/", "permanent": false },
+    { "source": "/chapter/08/", "destination": "/8/", "permanent": false }
   ]
 }
