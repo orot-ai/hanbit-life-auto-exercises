@@ -197,7 +197,7 @@ button {
 
 .chapter-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 680px);
   gap: 16px;
 }
 
@@ -344,6 +344,87 @@ button {
   font-size: clamp(38px, 6vw, 58px);
   line-height: 1.1;
   letter-spacing: -0.055em;
+}
+
+.chapter-intro {
+  max-width: 650px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.practice-flow {
+  margin: 0 0 24px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  list-style: none;
+  counter-reset: practice-step;
+}
+
+.practice-flow li {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fbfaf7;
+  counter-increment: practice-step;
+}
+
+.practice-flow li::before {
+  content: counter(practice-step, decimal-leading-zero);
+  display: block;
+  margin-bottom: 9px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.practice-flow strong,
+.practice-flow span {
+  display: block;
+}
+
+.practice-flow strong {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.practice-flow span {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.example-link {
+  min-height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.example-link:hover {
+  border-color: #aeb8b1;
+  transform: translateY(-1px);
+}
+
+.example-link strong,
+.example-link small {
+  display: block;
+}
+
+.example-link small {
+  margin-top: 4px;
+  color: var(--muted);
 }
 
 .prerequisite {
@@ -740,6 +821,10 @@ button {
     margin-top: 32px;
   }
 
+  .practice-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .footer-inner {
     padding-block: 28px;
     display: grid;
@@ -787,6 +872,10 @@ button {
 
   .chapter-hero h1 {
     font-size: clamp(36px, 11vw, 48px);
+  }
+
+  .practice-flow {
+    grid-template-columns: 1fr;
   }
 
   .file-card {
