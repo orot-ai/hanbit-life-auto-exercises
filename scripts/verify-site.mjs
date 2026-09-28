@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 const root = resolve(import.meta.dirname, "..");
 const exerciseRoot = resolve(root, "..", "output", "실습자료");
 const canonicalRoot = resolve(exerciseRoot, "제작원본");
-const pagePaths = ["index.html", "5/index.html", "6/index.html", "8/index.html"];
+const pagePaths = ["index.html", "5/index.html", "6/index.html", "8/index.html", "11/index.html"];
 const pages = new Map(pagePaths.map((path) => [path, readFileSync(resolve(root, path), "utf8")]));
 const vercelConfig = JSON.parse(readFileSync(resolve(root, "vercel.json"), "utf8"));
 const vercelIgnore = new Set(readFileSync(resolve(root, ".vercelignore"), "utf8").split("\n").map((line) => line.trim()).filter(Boolean));
@@ -26,9 +26,12 @@ const home = pages.get("index.html") ?? "";
 const chapter = pages.get("5/index.html") ?? "";
 const chapter6 = pages.get("6/index.html") ?? "";
 const chapter8 = pages.get("8/index.html") ?? "";
+const chapter11 = pages.get("11/index.html") ?? "";
 requireText(home, 'href="/5/"', "홈의 5장 링크 없음");
 requireText(home, 'href="/6/"', "홈의 6장 링크 없음");
 requireText(home, 'href="/8/"', "홈의 8장 링크 없음");
+requireText(home, 'href="/11/"', "홈의 11장 링크 없음");
+requireText(home, "가져온 정보는 왜 바로 할 일이 아닐까?", "홈의 11장 제목 불일치");
 requireText(home, "문서 하나로 첫 대시보드를 만듭니다", "홈의 5장 제목 불일치");
 requireText(home, "다운로드 폴더는 왜 항상 엉망이 될까?", "홈의 6장 제목 불일치");
 requireText(home, "녹음은 쌓이는데, 할 일은 어디로 갔을까?", "홈의 8장 제목 불일치");
@@ -54,6 +57,13 @@ requireText(chapter8, "예제 녹음 내려받기", "8장 예제 녹음 버튼 �
 requireText(chapter8, "M4A는 휴대폰과 컴퓨터에서 재생할 수 있는 음원 파일", "8장 M4A 설명 없음");
 requireText(chapter8, "일정과 자료 전달", "8장 녹음 내용 안내 없음");
 requireText(chapter8, "약 92초", "8장 녹음 길이 안내 없음");
+
+requireText(chapter11, 'href="/downloads/후속통화_예제.m4a"', "11장 후속 통화 다운로드 링크 없음");
+requireText(chapter11, 'download="후속통화_예제.m4a"', "11장 다운로드 파일명 불일치");
+requireText(chapter11, "후속 통화 예제 내려받기", "11장 다운로드 버튼 문구 불일치");
+requireText(chapter11, "11장과 12장에서 같은 파일을 사용합니다.", "11·12장 공통 음원 안내 없음");
+requireText(chapter11, "약 2분 6초", "11장 녹음 길이 안내 없음");
+if ((chapter11.match(/data-download=/g) ?? []).length !== 1) errors.push("11장은 후속 통화 음원 한 건만 제공해야 함");
 
 const assets = [
   {
@@ -86,6 +96,12 @@ const assets = [
     expectedHash: "75c3ffa6d9ac2fd994bb20e191f1c693242f707a10beb99b8e80ee71de7a2bbb",
     label: "8장 예제 녹음",
   },
+  {
+    deployed: resolve(root, "downloads", "후속통화_예제.m4a"),
+    canonical: process.env.HANBIT_FOLLOWUP_AUDIO ?? resolve(root, "..", "..", "hanbit-manuscript", "작업본", "11장", "examples", "후속통화_예제.m4a"),
+    expectedHash: "d9619b7a30a8c6f49d83fce4ee4057b8f3c492ef7ecdb0b43d46de67ce5510b8",
+    label: "11·12장 후속 통화 녹음",
+  },
 ];
 
 for (const asset of assets) {
@@ -99,10 +115,10 @@ for (const asset of assets) {
 }
 
 const downloadNames = readdirSync(resolve(root, "downloads")).filter((name) => statSync(resolve(root, "downloads", name)).isFile()).sort();
-const expectedDownloads = ["결과확인표.pdf", "예제_녹음.m4a", "예제_다운로드_폴더.zip", "인생자동화대시보드_PRD.md"].sort();
+const expectedDownloads = ["결과확인표.pdf", "예제_녹음.m4a", "예제_다운로드_폴더.zip", "인생자동화대시보드_PRD.md", "후속통화_예제.m4a"].sort();
 if (downloadNames.join("\n") !== expectedDownloads.join("\n")) errors.push(`공개 다운로드 범위 불일치: ${downloadNames.join(", ")}`);
 
-for (const removedChapter of ["7", "9", "11"]) {
+for (const removedChapter of ["7", "9"]) {
   if (existsSync(resolve(root, removedChapter))) errors.push(`제거 대상 장 디렉터리가 남음: ${removedChapter}`);
 }
 
@@ -133,4 +149,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`✓ 실습자료 페이지 ${pages.size}개와 완성 목업, 다운로드 4종, 제작 정본 5종, redirect 3개 검증 통과`);
+console.log(`✓ 실습자료 페이지 ${pages.size}개와 완성 목업, 다운로드 5종, 제작 정본 6종, redirect 3개 검증 통과`);
